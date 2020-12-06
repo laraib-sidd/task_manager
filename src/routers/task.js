@@ -7,7 +7,15 @@ const router = express.Router()
 
 // Task Endpoints
 // Task Creation
-router.post('/tasks', auth, async (req, res) => {
+router.post('/task', auth, async (req, res) => {
+    const found = await Task.findOne({
+        description: req.body.description
+    })
+    if (found) {
+        return res.status(404).send({
+            error: "Task Already Exists"
+        })
+    }
     const task = new Task({
         ...req.body,
         owner: req.user._id
@@ -24,7 +32,7 @@ router.post('/tasks', auth, async (req, res) => {
 // Get all Task GET /tasks 
 // Get task filtered task GET /tasks?progress=true
 // Paginated tasks GET /tasks?limit=2&skip=0
-// Sorting GET /tasks/?sortBy=createdAt_desc
+// Sorting GET /tasks?sortBy=createdAt_desc
 router.get('/tasks', auth, async (req, res) => {
     const match = {}
     const sort = {}
@@ -54,14 +62,19 @@ router.get('/tasks', auth, async (req, res) => {
     }
 })
 
-// Get task by id
-router.get('/tasks/:id', auth, async (req, res) => {
-    const _id = req.params.id;
+// Get task by description
+router.get('/task', auth, async (req, res) => {
+    const description = req.query.description;
     try {
         const task = await Task.findOne({
-            _id,
+            description,
             owner: req.user._id
         })
+        if (!task) {
+            return res.status(404).send({
+                error: "Task Not Found"
+            })
+        }
         res.send(task)
     } catch (e) {
         res.status(500).send()
@@ -69,7 +82,7 @@ router.get('/tasks/:id', auth, async (req, res) => {
 })
 
 // Update Task
-router.patch('/tasks/:id', auth, async (req, res) => {
+router.patch('/task/:id', auth, async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpatdes = ['description', 'progress']
     const isAllowed = updates.every((update) => allowedUpatdes.includes(update))
@@ -98,7 +111,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
 })
 
 // Delete a task
-router.delete('/tasks', auth, async (req, res) => {
+router.delete('/task/:id', auth, async (req, res) => {
     try {
         const task = await Task.findOneAndDelete({
             _id: req.params.id,
