@@ -17,12 +17,7 @@ const sendWelcomeEmail = (name, email) => {
         // console.log(body, error)
     });
 }
-// try {
-//     sendWelcomeEmail('laraib', 'newmon232@gmail.com')
-//     console.log('Mailsent')
-// } catch (error) {
-//     console.log(error)
-// }
+
 
 const sendCancellationEmail = (name, email) => {
     const data = {

@@ -10,6 +10,8 @@
 ⚡️ Image Uploading\
 ⚡️ Pagination\
 ⚡️ Sorting\
+⚡️ Email Service
+
 
 To view a live example, **[click here](https://newest-task-manager.herokuapp.com/)**
 ---
@@ -20,7 +22,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites 📋
 
-You'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [NPM](http://npmjs.com)) installed on your computer.\
+You'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [NPM](http://npmjs.com)) installed on your computer.
 
 ```
 node@v10.16.0 or higher
@@ -62,7 +64,12 @@ $ yarn
 # Start development server
 $ yarn develop
 ```
-
+```
+ApiKeys required:
+* MongoDB URI
+* Mailgun ApiKey
+* Mailgun Domain 
+```
 **NOTE**:
 If your run into issues installing the dependencies with NPM, use this command:
 
@@ -76,23 +83,40 @@ $ sudo npm install --unsafe-perm=true --allow-root
 
 ## Instructions:
 
-### Step 1 - Registering
+### Registering
 
-Do a post request at `https://localhost:3000/users/` with proper data to register a user.:
+Do a post request at `https://localhost:3000/user/register` with proper data to register a user.:
 
-### Step 2 - Upload user avatar
+### Upload user avatar
 
-Do a post request at `https://localhost:3000/users/me/avatar` with a file to upload it.
+Do a post request at `https://localhost:3000/user/me/avatar` with a file to upload it.
 
-### Step 3 - Login 
+### Login 
 
-Do a post request at `https://localhost:3000/users/login` with valid credentials.
+Do a post request at `https://localhost:3000/user/login` with valid credentials.
 
-### Step 4 - Taks Creation
+### View Profile
 
-Do a post request at `https://localhost:3000/tasks/` with valid details regardig the task.
+Do a get request at `https://localhost:3000/user/me` with valid details regardig the task.
+
+### Create a task
+
+Do a post request at `https://localhost:3000/task/` with valid details regardig the task.
+
+### Delete a task
+
+Do a delete request at `https://localhost:3000/task/:id` with valid details regardig the task.
+
+### Delete profile
+
+Do a delete request at `https://localhost:3000/user/me` with valid details regardig the task.
 
 ---
+
+## Postaman Collection
+
+* Here is the shareble link to the postman collection with all the routes : [Colllection](https://www.postman.com/collections/e7f09c5a79610b7bca08)
+
 
 ## Testing 👥
 
