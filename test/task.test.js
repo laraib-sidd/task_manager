@@ -13,7 +13,7 @@ beforeEach(setupDatabase);
 
 test("Should create task", async () => {
 	const response = await request(app)
-		.post("/tasks")
+		.post("/task")
 		.set("Authorization", `Bearer ${userOne.tokens[0].token}`)
 		.send({
 			description: "Testing",
@@ -40,7 +40,7 @@ test("Should get user tasks", async () => {
 
 test("Try to delete first user's task by second user", async () => {
 	const response = await request(app)
-		.delete(`/tasks/${taskOne._id}`)
+		.delete(`/task/${taskOne._id}`)
 		.set("Authorization", `Bearer ${userTwo.tokens[0].token}`)
 		.send()
         .expect(404);
