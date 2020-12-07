@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "env-cmd nodemon src/index.js",
     "start": "node src/index.js",
+    "mail" : "env-cmd node src/emails/accounts.js",
     "test": "env-cmd jest --watch --runInBand"
   },
   "jest": {

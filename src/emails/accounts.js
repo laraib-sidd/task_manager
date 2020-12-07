@@ -1,24 +1,30 @@
 const mailgun = require("mailgun-js");
 const DOMAIN = process.env.DOMAIN
-const apiKey = process.env.SENDGRID_API_KEY
+const API_KEY = process.env.SENDGRID_API_KEY
 const mg = mailgun({
-    apiKey:process.env.SENDGRID_API_KEY,
+    apiKey: API_KEY,
     domain: DOMAIN
 });
 
-const sendWelcomeEmail = (name,email) => {
+const sendWelcomeEmail = (name, email) => {
     const data = {
         from: 'Welcom New User <me@samples.mailgun.org>',
         to: email,
         subject: 'Thank you for joining us',
         text: `Welcome to the app ${name}, Let us know how much you like our app.`
     };
-    mg.messages().send(data, function (error, body) {
-        // console.log(error);
+    mg.messages().send(data, (error, body) => {
+        // console.log(body, error)
     });
 }
+// try {
+//     sendWelcomeEmail('laraib', 'newmon232@gmail.com')
+//     console.log('Mailsent')
+// } catch (error) {
+//     console.log(error)
+// }
 
-const sendCancellationEmail = (name,email) => {
+const sendCancellationEmail = (name, email) => {
     const data = {
         from: `Goodbye ${name} <me@samples.mailgun.org>`,
         to: email,
@@ -29,7 +35,7 @@ const sendCancellationEmail = (name,email) => {
         // console.log(error);
     });
 }
-module.exports ={
+module.exports = {
     sendWelcomeEmail,
     sendCancellationEmail
 }

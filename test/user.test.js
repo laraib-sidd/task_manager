@@ -1,7 +1,11 @@
 const app = require("../src/app");
 const request = require("supertest");
 const User = require("../src/models/user");
-const { setupDatabase, userOne, userOneId } = require("./fixtures/db");
+const {
+	setupDatabase,
+	userOne,
+	userOneId
+} = require("./fixtures/db");
 
 beforeEach(setupDatabase);
 
@@ -67,7 +71,7 @@ test("Should not get profile for unauthorized user", async () => {
 
 test("Should delete user", async () => {
 	const response = await request(app)
-		.delete("/users/me")
+		.delete("/user/me")
 		.set("Authorization", `Bearer ${userOne.tokens[0].token}`)
 		.send()
 		.expect(200);
@@ -97,7 +101,9 @@ test("Should update user fields", async () => {
 	await request(app)
 		.patch("/user/me")
 		.set("Authorization", `Bearer ${userOne.tokens[0].token}`)
-		.send({ name: "larry" })
+		.send({
+			name: "larry"
+		})
 		.expect(200);
 
 	// Checking the assertion for updates
@@ -109,6 +115,8 @@ test("Should not update invalid user fields", async () => {
 	await request(app)
 		.patch("/user/me")
 		.set("Authorization", `Bearer ${userOne.tokens[0].token}`)
-		.send({ location: "delhi" })
+		.send({
+			location: "delhi"
+		})
 		.expect(404);
 });
